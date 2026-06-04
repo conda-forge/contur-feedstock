@@ -10,14 +10,11 @@ package:
   version: ${{ version }}
 
 source:
-  # No sdists on PyPI yet so fall back to Git source
-  # c.f. https://gitlab.com/hepcedar/contur/-/work_items/541
-  # url: https://pypi.org/packages/source/c/contur/contur-${{ version }}.tar.gz
-  url: https://gitlab.com/hepcedar/contur/-/archive/contur-${{ version }}/contur-contur-${{ version }}.tar.gz
-  sha256: 06dc3b47203028502c5132b6f64e28b1a24f6810616df67d204576cb5c603779
+  url: https://pypi.org/packages/source/c/contur/contur-${{ version }}.tar.gz
+  sha256: 2f44c58f6af41c1a50ecf90fc6e997d8433977356a87c4056084b6112d200010
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation

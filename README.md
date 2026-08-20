@@ -47,31 +47,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `contur` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda install contur
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba install contur
 ```
 
-It is possible to list all of the versions of `contur` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add contur
+# for installing globally
+pixi global install contur
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `contur` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search contur --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search contur --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search contur --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -83,6 +125,8 @@ mamba repoquery whoneeds contur --channel conda-forge
 # List dependencies of `contur`:
 mamba repoquery depends contur --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge

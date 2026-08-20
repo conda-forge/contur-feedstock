@@ -14,7 +14,7 @@ source:
   sha256: 2f44c58f6af41c1a50ecf90fc6e997d8433977356a87c4056084b6112d200010
 
 build:
-  number: 1
+  number: 2
   noarch: python
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
@@ -84,6 +84,7 @@ tests:
         - python-scripts/contur-scan-xs-bf
         - python-scripts/contur-scan-xs-bf-alt
         - python-scripts/contur-smtest
+
   - python:
       imports:
         - contur
@@ -91,9 +92,25 @@ tests:
       python_version:
         - ${{ python_min }}.*
         - "*"
-  - script:
+
+  - files:
+      recipe:
+        - test_rivet_analysis.cc
+    script:
       - contur --version
       - contur --help
+      # Activation-time 'make' must have produced the analysis list
+      - test -f "${CONTUR_USER_DIR}/analysis-list"
+      # Verify that runtime compilation of Rivet analyses works with
+      # minimally activated compilers that do not set environmental variables.
+      - cp test_rivet_analysis.cc "${CONTUR_DATA_PATH}/data/Rivet/SmokeTest.cc"
+      - rm -rf "${CONTUR_USER_DIR}"
+      - >-
+        env -u CC -u CXX -u FC -u CFLAGS -u CXXFLAGS -u CPPFLAGS -u LDFLAGS
+        bash -c '. "${CONDA_PREFIX}/etc/conda/activate.d/zzz-activate-contur.sh"
+        && test -f "${CONTUR_USER_DIR}/Rivet-ConturOverload.so"
+        && test -f "${CONTUR_USER_DIR}/analysis-list"'
+      - rm -f "${CONTUR_DATA_PATH}/data/Rivet/SmokeTest.cc"
 
 about:
   license: GPL-3.0-or-later

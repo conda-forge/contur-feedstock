@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "3.1.4"
+  version: "3.1.5"
   # Need Python 3.10+ to avoid rivet/libfastjet.so.0 ImportError
   python_min: "3.10"
 
@@ -11,10 +11,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/c/contur/contur-${{ version }}.tar.gz
-  sha256: 2f44c58f6af41c1a50ecf90fc6e997d8433977356a87c4056084b6112d200010
+  sha256: 74ac5c763819786ec638f1f8c0542013817782a5109e925ba11d681566cbc2cd
 
 build:
-  number: 2
+  number: 0
   noarch: python
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation

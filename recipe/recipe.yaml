@@ -12,6 +12,9 @@ package:
 source:
   url: https://pypi.org/packages/source/c/contur/contur-${{ version }}.tar.gz
   sha256: 74ac5c763819786ec638f1f8c0542013817782a5109e925ba11d681566cbc2cd
+  patches:
+    # ttkbootstrap is not on conda-forge and is only an optional import upstream
+    - make-ttkbootstrap-an-optional-dependency.patch
 
 build:
   number: 0
@@ -41,7 +44,7 @@ requirements:
   host:
     - python ${{ python_min }}.*
     - pip
-    - setuptools >=64
+    - hatchling
   run:
     - python >=${{ python_min }}
     - click
@@ -56,6 +59,7 @@ requirements:
     - scipy
     - tqdm
     - uncertainties
+    - autograd
     - pytest
     - rivet
     # Needed to create "${CONTUR_USER_DIR}/analysis-list" in activate.sh
@@ -68,6 +72,7 @@ tests:
   - package_contents:
       # FIXME: Relocate python-scripts/ contents to bin/
       files:
+        - python-scripts/check-contur-deps
         - python-scripts/contur
         - python-scripts/contur-batch
         - python-scripts/contur-export
@@ -82,7 +87,6 @@ tests:
         - python-scripts/contur-profile
         - python-scripts/contur-rivetplots
         - python-scripts/contur-scan-xs-bf
-        - python-scripts/contur-scan-xs-bf-alt
         - python-scripts/contur-smtest
 
   - python:

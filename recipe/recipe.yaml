@@ -20,7 +20,7 @@ build:
   number: 0
   noarch: python
   script:
-    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - ${{ PYTHON }} -m pip install . -vv
 
     # Add the post activate/deactivate scripts
 
@@ -47,20 +47,19 @@ requirements:
     - hatchling
   run:
     - python >=${{ python_min }}
-    - click
-    - configobj
-    - matplotlib-base
-    - numpy
-    - pandas
-    - pathos
-    - pyslha
-    - pyyaml
-    - scikit-learn
-    - scipy
-    - tqdm
-    - uncertainties
-    - autograd
-    - pytest
+    - click >=8.1.7
+    - configobj >=5.0.6
+    - matplotlib-base >=3.8
+    - numpy >=1.71
+    - pandas >=1.4.3
+    - pathos >=0.3.2
+    - pyslha >=3.2.6
+    - pyyaml >=6.0.1
+    - scikit-learn >=1.5.0
+    - scipy >=1.10.0
+    - tqdm >=4.66.4
+    - uncertainties >=3.2.1
+    - autograd >=1.8.0
     - rivet
     # Needed to create "${CONTUR_USER_DIR}/analysis-list" in activate.sh
     - cxx-compiler

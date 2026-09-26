@@ -1,0 +1,33 @@
+From 648205fc3edb124a176fe780ad6ca7159c641399 Mon Sep 17 00:00:00 2001
+From: Matthew Feickert <matthew.feickert@wisc.edu>
+Date: Sat, 26 Sep 2026 14:51:02 -0600
+Subject: [PATCH] build: make ttkbootstrap an optional dependency
+
+ttkbootstrap is not packaged on conda-forge. contur only imports it
+inside a try/except in contur.plot.interactivity and raises a clear
+ImportError at use time if it is missing, so it is not required for
+core functionality. Move it to an optional 'gui' extra so pip's
+metadata check passes in the conda-forge build.
+---
+ pyproject.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 17513b2..f1721d4 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -36,10 +36,10 @@ dependencies = [
+     "pathos>=0.3.2",
+     "uncertainties>=3.2.1",
+     "autograd>=1.8.0",
+-    "ttkbootstrap>=1.14.2"
+ ]
+ 
+ [project.optional-dependencies]
++gui = ["ttkbootstrap>=1.14.2"]  # optional Tk styling for contur-plot interactivity
+ spey = ["spey[iminuit]==0.2.7"]  # optional likelihood backend
+ mysql = ["pymysql>=1.1.1"]  # optional MySQL DB backend
+ panel = [
+-- 
+2.55.0
+

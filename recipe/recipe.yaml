@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "3.1.4"
+  version: "3.1.5"
   # Need Python 3.10+ to avoid rivet/libfastjet.so.0 ImportError
   python_min: "3.10"
 
@@ -11,13 +11,16 @@ package:
 
 source:
   url: https://pypi.org/packages/source/c/contur/contur-${{ version }}.tar.gz
-  sha256: 2f44c58f6af41c1a50ecf90fc6e997d8433977356a87c4056084b6112d200010
+  sha256: 74ac5c763819786ec638f1f8c0542013817782a5109e925ba11d681566cbc2cd
+  patches:
+    # ttkbootstrap is not on conda-forge and is only an optional import upstream
+    - make-ttkbootstrap-an-optional-dependency.patch
 
 build:
-  number: 2
+  number: 0
   noarch: python
   script:
-    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - ${{ PYTHON }} -m pip install . -vv
 
     # Add the post activate/deactivate scripts
 
@@ -41,22 +44,22 @@ requirements:
   host:
     - python ${{ python_min }}.*
     - pip
-    - setuptools >=64
+    - hatchling
   run:
     - python >=${{ python_min }}
-    - click
-    - configobj
-    - matplotlib-base
-    - numpy
-    - pandas
-    - pathos
-    - pyslha
-    - pyyaml
-    - scikit-learn
-    - scipy
-    - tqdm
-    - uncertainties
-    - pytest
+    - click >=8.1.7
+    - configobj >=5.0.6
+    - matplotlib-base >=3.8
+    - numpy >=1.71
+    - pandas >=1.4.3
+    - pathos >=0.3.2
+    - pyslha >=3.2.6
+    - pyyaml >=6.0.1
+    - scikit-learn >=1.5.0
+    - scipy >=1.10.0
+    - tqdm >=4.66.4
+    - uncertainties >=3.2.1
+    - autograd >=1.8.0
     - rivet
     # Needed to create "${CONTUR_USER_DIR}/analysis-list" in activate.sh
     - cxx-compiler
@@ -68,6 +71,7 @@ tests:
   - package_contents:
       # FIXME: Relocate python-scripts/ contents to bin/
       files:
+        - python-scripts/check-contur-deps
         - python-scripts/contur
         - python-scripts/contur-batch
         - python-scripts/contur-export
@@ -82,7 +86,6 @@ tests:
         - python-scripts/contur-profile
         - python-scripts/contur-rivetplots
         - python-scripts/contur-scan-xs-bf
-        - python-scripts/contur-scan-xs-bf-alt
         - python-scripts/contur-smtest
 
   - python:
